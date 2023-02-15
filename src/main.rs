@@ -9,7 +9,7 @@ use sequence::Sequence;
 use transformer::transform_sequence;
 // https://github.com/emoon/rust_minifb/blob/master/examples/image.rs
 fn main() {
-    let mut frame_seq = Sequence::new("frames/frame.", ".png", 273, 6572);
+    let mut frame_seq = Sequence::new("frames/frame.", ".png", 1, 6572);
     // Process
 
     // Render Output

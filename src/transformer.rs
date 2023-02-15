@@ -35,7 +35,7 @@ pub fn transform_frame(img: &mut image::GrayImage) -> image::GrayImage {
         let edge = get_edge_line(img, &seq, bg_color);
         //let color = if edge.len() == seq.len() { center_color } else { fg_color };
         for (x, y) in edge {
-            new_img.put_pixel(x, y, Luma([color]));
+            new_img.put_pixel(x, y, Luma([fg_color]));
         }
     }
     // LEGT MARGIN
@@ -45,7 +45,7 @@ pub fn transform_frame(img: &mut image::GrayImage) -> image::GrayImage {
         let edge = get_edge_line(img, &seq, bg_color);
         //let color = if edge.len() == seq.len() { center_color } else { fg_color };
         for (x, y) in edge {
-            new_img.put_pixel(x, y, Luma([color]));
+            new_img.put_pixel(x, y, Luma([fg_color]));
         }
     }
     // BOTTOM MARGIN
@@ -55,7 +55,7 @@ pub fn transform_frame(img: &mut image::GrayImage) -> image::GrayImage {
         let edge = get_edge_line(img, &seq, bg_color);
         //let color = if edge.len() == seq.len() { center_color } else { fg_color };
         for (x, y) in edge {
-            new_img.put_pixel(x, y, Luma([color]));
+            new_img.put_pixel(x, y, Luma([fg_color]));
         }
     }
     // RIGHT MARGIN
@@ -65,7 +65,7 @@ pub fn transform_frame(img: &mut image::GrayImage) -> image::GrayImage {
         let edge = get_edge_line(img, &seq, bg_color);
         //let color = if edge.len() == seq.len() { center_color } else { fg_color };
         for (x, y) in edge {
-            new_img.put_pixel(x, y, Luma([color]));
+            new_img.put_pixel(x, y, Luma([fg_color]));
         }
     }
     return new_img;
@@ -99,11 +99,11 @@ fn get_edge_line(img: &mut image::GrayImage, seq: &Vec<(u32, u32)>, bg_color:u8)
     for (index, (x, y)) in seq.iter().enumerate() {
         // println!("({},{}): {}",x,y,img.get_pixel(x, y).0[0]);
         let color = img.get_pixel(*x, *y).0[0];
-        if (base_color < u8::MAX - THRESHOLD && base_color + THRESHOLD < color)
-            || (base_color > u8::MIN + THRESHOLD && base_color - THRESHOLD > color)
+        if (bg_color < u8::MAX - THRESHOLD && bg_color + THRESHOLD < color)
+            || (bg_color > u8::MIN + THRESHOLD && bg_color - THRESHOLD > color)
         {
             return seq[index..seq.len()].to_vec();
         }
     }
-    return seq.clone();
+    return vec![]
 }
