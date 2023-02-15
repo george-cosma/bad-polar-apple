@@ -1,3 +1,6 @@
+/// Generates a sequence of (x,y) coordinates that represent a line between pixel (x0, y0) to (x1,y1), in that order.
+/// 
+/// For this implementation, we use [Bresenham's line algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm).
 pub fn plot_line(x0: u32, y0: u32, x1: u32, y1: u32) -> Vec<(u32, u32)> {
     if y1.abs_diff(y0) < x1.abs_diff(x0) {
         if x0 > x1 {
