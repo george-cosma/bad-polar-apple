@@ -30,10 +30,10 @@ pub fn transform_frame(img: &mut image::GrayImage) -> image::GrayImage {
     
     let center_color = (((img.get_pixel(img.width() / 2, img.height() / 2).0[0] as f64) / 255.0).round() as u8) * 255;
 
-    // let bg_color = get_bg_color(img);
-    // let fg_color = invert_color(bg_color);
-    let bg_color = invert_color(center_color);
-    let fg_color = center_color;
+    let bg_color = get_bg_color(img);
+    let fg_color = invert_color(bg_color);
+    // let bg_color = invert_color(center_color);
+    // let fg_color = center_color;
     new_img.fill(bg_color);
 
     // TOP MARGIN
