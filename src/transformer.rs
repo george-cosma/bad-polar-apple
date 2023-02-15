@@ -28,6 +28,8 @@ const STEP:usize = 4;
 pub fn transform_frame(img: &mut image::GrayImage) -> image::GrayImage {
     let mut new_img = image::GrayImage::new(img.width(), img.height());
     
+    let center_color = img.get_pixel(img.width() / 2, img.height() / 2).0[0];
+
     let bg_color = get_bg_color(img);
     let fg_color = invert_color(bg_color);
     new_img.fill(bg_color);
@@ -36,40 +38,56 @@ pub fn transform_frame(img: &mut image::GrayImage) -> image::GrayImage {
     for x0 in (0..img.width()).step_by(STEP) {
         let seq = line_sequence::plot_line(x0, 0, img.width() / 2, img.height() / 2);
 
-        let edge = get_edge_line(img, &seq, bg_color);
-        
+        let edge = get_edge_line(img, &seq, center_color);
         for (x, y) in edge {
-            new_img.put_pixel(x, y, Luma([fg_color]));
+            new_img.put_pixel(x, y, Luma([invert_color(center_color)]));
+        }
+    
+        let inverted_edge = get_edge_line(img, &seq, invert_color(center_color));
+        for (x, y) in inverted_edge {
+            new_img.put_pixel(x, y, Luma([center_color]));
         }
     }
     // LEGT MARGIN
     for y0 in (0..img.height()).step_by(STEP) {
         let seq = line_sequence::plot_line(0, y0, img.width() / 2, img.height() / 2);
 
-        let edge = get_edge_line(img, &seq, bg_color);
-        
+        let edge = get_edge_line(img, &seq, center_color);
         for (x, y) in edge {
-            new_img.put_pixel(x, y, Luma([fg_color]));
+            new_img.put_pixel(x, y, Luma([invert_color(center_color)]));
+        }
+    
+        let inverted_edge = get_edge_line(img, &seq, invert_color(center_color));
+        for (x, y) in inverted_edge {
+            new_img.put_pixel(x, y, Luma([center_color]));
         }
     }
     // BOTTOM MARGIN
     for x0 in (0..img.width()).step_by(STEP) {
         let seq = line_sequence::plot_line(x0, img.height() - 1, img.width() / 2, img.height() / 2);
 
-        let edge = get_edge_line(img, &seq, bg_color);
-        
+        let edge = get_edge_line(img, &seq, center_color);
         for (x, y) in edge {
-            new_img.put_pixel(x, y, Luma([fg_color]));
+            new_img.put_pixel(x, y, Luma([invert_color(center_color)]));
+        }
+    
+        let inverted_edge = get_edge_line(img, &seq, invert_color(center_color));
+        for (x, y) in inverted_edge {
+            new_img.put_pixel(x, y, Luma([center_color]));
         }
     }
     // RIGHT MARGIN
     for y0 in (0..img.height()).step_by(STEP) {
         let seq = line_sequence::plot_line(img.width() - 1, y0, img.width() / 2, img.height() / 2);
 
-        let edge = get_edge_line(img, &seq, bg_color);
-        
+        let edge = get_edge_line(img, &seq, center_color);
         for (x, y) in edge {
-            new_img.put_pixel(x, y, Luma([fg_color]));
+            new_img.put_pixel(x, y, Luma([invert_color(center_color)]));
+        }
+    
+        let inverted_edge = get_edge_line(img, &seq, invert_color(center_color));
+        for (x, y) in inverted_edge {
+            new_img.put_pixel(x, y, Luma([center_color]));
         }
     }
     return new_img;
